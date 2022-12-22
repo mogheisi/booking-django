@@ -16,10 +16,10 @@ class City(models.Model):
         return self.city_name
 
 
-class Facility(models.Model):
-    facility_title = models.CharField(max_length=32)
-    facility_description = models.TextField()
+class Amenity(models.Model):
+    Amenity_title = models.CharField(max_length=32)
+    Amenity_description = models.TextField()
     is_valid = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.facility_title
+        return self.Amenity_title
