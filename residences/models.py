@@ -20,7 +20,11 @@ class City(models.Model):
 class Address(models.Model):
     city = models.ForeignKey(City, on_delete=models.DO_NOTHING)
     address = models.TextField()
-    # location ==> geolocation
+
+
+class Policy(models.Model):
+    policy_title = models.CharField(max_length=32)
+    policy_description = models.TextField()
 
 
 class Amenity(models.Model):
@@ -35,14 +39,14 @@ class Amenity(models.Model):
 class AbstractResidence(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='city')
     facilities = models.ForeignKey(Amenity, on_delete=models.CASCADE, blank=True, null=True)
-    # location
+    address = models.ForeignKey(Address, on_delete=models.DO_NOTHING)
 
 
 class Hotel(AbstractResidence):
     hotel_name = models.CharField(max_length=32)
     hotel_description = models.TextField()
     rate = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    # policies
+    hotel_policies = models.ForeignKey(Policy, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.hotel_name
@@ -53,7 +57,6 @@ class Room(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     price = models.IntegerField()
     room_facilities = models.ForeignKey(Amenity, on_delete=models.CASCADE, blank=True, null=True)
-    # room_type
     capacity = models.PositiveSmallIntegerField()
     is_valid = models.BooleanField(default=True)
     room_status = (
