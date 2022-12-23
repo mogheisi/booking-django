@@ -1,7 +1,35 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from reservations.models import City, Amenity
-from django.conf import settings
+
+
+class Country(models.Model):
+    country_name = models.CharField(max_length=64)
+
+    def __str__(self):
+        return self.country_name
+
+
+class City(models.Model):
+    city_name = models.CharField(max_length=64)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.city_name
+
+
+class Address(models.Model):
+    city = models.ForeignKey(City, on_delete=models.DO_NOTHING)
+    address = models.TextField()
+    # location ==> geolocation
+
+
+class Amenity(models.Model):
+    Amenity_title = models.CharField(max_length=32)
+    Amenity_description = models.TextField()
+    is_valid = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.Amenity_title
 
 
 class AbstractResidence(models.Model):
@@ -36,3 +64,7 @@ class Room(models.Model):
 
     def __str__(self):
         return f"room {self.room_number}, {self.hotel.hotel_name}"
+
+
+
+

@@ -1,5 +1,5 @@
 from django.db import models
-from reservations.models import City, Amenity
+from residences.models import City, Amenity
 from django.conf import settings
 
 

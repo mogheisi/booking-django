@@ -1,25 +1,40 @@
 from django.db import models
+from django.conf import settings
+from transportations.models import FlightTicket
+from residences.models import Hotel
 
 
-class Country(models.Model):
-    country_name = models.CharField(max_length=64)
+class AbstractReserve(models.Model):
+    passenger = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    created_time = models.DateTimeField(auto_now_add=True)
+    modified_time = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.country_name
-
-
-class City(models.Model):
-    city_name = models.CharField(max_length=64)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.city_name
+    class Meta:
+        abstract = True
 
 
-class Amenity(models.Model):
-    Amenity_title = models.CharField(max_length=32)
-    Amenity_description = models.TextField()
-    is_valid = models.BooleanField(default=False)
+class AbstractPayment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    total_price = models.IntegerField()
+    total_discount = models.IntegerField()
+    payment_time = models.DateTimeField()
+    status_choices = (
+        ('S', 'Successful'),
+        ('U', 'Unsuccessful'),
+        ('P', 'Pending'),
+        ('C', 'Canceled'),
+    )
+    payment_status = models.CharField(choices=status_choices, max_length=1)
 
-    def __str__(self):
-        return self.Amenity_title
+    class Meta:
+        abstract = True
+
+
+class FlightTicketReservation(AbstractReserve):
+    flight = models.ForeignKey(FlightTicket, on_delete=models.PROTECT)
+    passport_number = models.IntegerField()
+
+
+class HotelBooking(AbstractReserve):
+    hotel = models.ForeignKey(Hotel, on_delete=models.PROTECT)
+    # from - to -
