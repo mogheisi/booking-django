@@ -1,6 +1,6 @@
 from django.db import models
 from residences.models import City, Amenity
-from django.conf import settings
+from comments.models import AbstractComment
 
 
 class FlightType(models.Model):
@@ -43,4 +43,10 @@ class FlightPrice(models.Model):
     flight = models.ForeignKey(FlightTicket, on_delete=models.CASCADE)
     flight_type = models.ForeignKey(FlightType, on_delete=models.CASCADE)
     price = models.IntegerField()
-    
+
+
+class AirlineComment(AbstractComment):
+    airline = models.ForeignKey(Airline, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.Airline

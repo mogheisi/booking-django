@@ -1,4 +1,5 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
+from comments.models import AbstractComment
 from django.db import models
 
 
@@ -69,5 +70,8 @@ class Room(models.Model):
         return f"room {self.room_number}, {self.hotel.hotel_name}"
 
 
+class HotelComment(AbstractComment):
+    movie = models.ForeignKey(Hotel, on_delete=models.CASCADE)
 
-
+    def __str__(self):
+        return self.Hotel
