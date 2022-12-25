@@ -1,14 +1,19 @@
 from django.contrib import admin
-from .models import FlightTicket, Airline, FlightPrice
+from .models import FlightTicket, Airline, FlightTypePrice, Airport
 
 
 admin.site.register(Airline)
+admin.site.register(Airport)
 
 
-class ModelInLine(admin.StackedInline):
-    model = FlightPrice
+class TypePriceInLine(admin.StackedInline):
+    model = FlightTypePrice
+
+
+class AirportInLine(admin.StackedInline):
+    model = FlightTypePrice
 
 
 @admin.register(FlightTicket)
 class FlightTicketAdmin(admin.ModelAdmin):
-    inlines = (ModelInLine,)
+    inlines = (TypePriceInLine, AirportInLine)
