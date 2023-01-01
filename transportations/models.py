@@ -27,8 +27,8 @@ class Airport(models.Model):
 class AbstractTransportationTicket(models.Model):
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
-    origin = models.ForeignKey(City, on_delete=models.CASCADE, related_name='origin')
-    destination = models.ForeignKey(City, on_delete=models.CASCADE, related_name='destination')
+    origin = models.ForeignKey(City, on_delete=models.CASCADE, related_name='origin_city')
+    destination = models.ForeignKey(City, on_delete=models.CASCADE, related_name='destination_city')
     capacity = models.IntegerField()
     amenities = models.ForeignKey(Amenity, on_delete=models.CASCADE, blank=True, null=True)
     price = models.IntegerField()
@@ -39,8 +39,10 @@ class AbstractTransportationTicket(models.Model):
 
 class FlightTicket(AbstractTransportationTicket):
     flight_number = models.IntegerField()
-    airline = models.ForeignKey(Airline, on_delete=models.PROTECT)
-    airport = models.ForeignKey(Airport, on_delete=models.CASCADE)
+    airline = models.ForeignKey(Airline, on_delete=models.PROTECT, related_name='ticket_airline')
+    origin_airport = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name='origin_airport_ticket')
+    destination_airport = models.ForeignKey(Airport, on_delete=models.CASCADE,
+                                            related_name='destination_airport_ticket')
 
     def __str__(self):
         return f'flight number {self.flight_number}, {self.airline}'

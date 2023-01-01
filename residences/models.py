@@ -29,12 +29,12 @@ class Policy(models.Model):
 
 
 class Amenity(models.Model):
-    Amenity_title = models.CharField(max_length=32)
-    Amenity_description = models.TextField()
-    is_valid = models.BooleanField(default=False)
+    amenity_title = models.CharField(max_length=32)
+    amenity_description = models.TextField()
+    is_valid = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.Amenity_title
+        return self.amenity_title
 
 
 class AbstractResidence(models.Model):
