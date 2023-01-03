@@ -1,7 +1,10 @@
 from django.db import models
 from django.conf import settings
+from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
+
 from transportations.models import FlightTicket
-from residences.models import Hotel
+from residences.models import Hotel, Room
 
 
 class AbstractReserve(models.Model):
@@ -37,4 +40,7 @@ class FlightTicketReservation(AbstractReserve):
 
 class HotelBooking(AbstractReserve):
     hotel = models.ForeignKey(Hotel, on_delete=models.PROTECT)
-    # from - to -
+    room = models.ForeignKey(Room, on_delete=models.PROTECT)
+    start_date = models.DateTimeField(auto_now_add=False)
+    end_date = models.DateTimeField(auto_now_add=False)
+
