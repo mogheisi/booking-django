@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
 
+    'silk',
+
     'users',
     'reservations',
     'transportations',
@@ -56,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'silk.middleware.SilkyMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -148,6 +151,13 @@ SIMPLE_JWT = {
 
 }
 
+# silky config
+
+SILKY_AUTHENTICATION = True
+SILKY_AUTHORISATION = True
+SILKY_META = True
+SILKY_INTERCEPT_PERCENT = 100  # for development
+SILKY_ANALYZE_QUERIES = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
