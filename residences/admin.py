@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Hotel, Room
+from .models import Hotel, Room, Address, Policy
 
 
 class ModelInLine(admin.StackedInline):
@@ -12,4 +12,6 @@ class HotelAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Room)
+admin.site.register(Address)
+admin.site.register(Policy)
 
