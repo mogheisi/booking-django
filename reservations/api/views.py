@@ -20,10 +20,11 @@ class HotelBookingAPIView(APIView):
         return Response(serializer.data)
 
     def post(self, request, pk):
-        serializer = HotelBookingSerializer(data=request.data)
+        serializer = HotelBookingSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
-            room = Room.objects.get(id=request.data['room']).status = '1'
+            room = Room.objects.get(id=request.data['room'])
+            room.status = '1'
             room.save()
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

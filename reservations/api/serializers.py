@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from reservations.models import HotelBooking
+from reservations.models import HotelBooking, FlightTicketReservation
 from residences.models import Room
 
 
@@ -25,7 +25,16 @@ class HotelBookingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HotelBooking
-        fields = ['start_date', 'end_date', 'hotel', 'room', 'passenger']
+        fields = ['start_date', 'end_date', 'hotel', 'room']
+
+        # extra_kwargs = {
+        #     'passenger': {'required': False, 'allow_null': True},
+        # }
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        validated_data['passenger'] = user
+        return super(HotelBookingSerializer, self).create(validated_data)
 
     def validate(self, data):
         room_status = Room.objects.get(id=data['room'].id).status
