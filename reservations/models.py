@@ -35,7 +35,7 @@ class AbstractPayment(models.Model):
 
 class FlightTicketReservation(AbstractReserve):
     flight = models.ForeignKey(FlightTicket, on_delete=models.PROTECT)
-    passport_number = models.IntegerField()
+    passport_number = models.IntegerField(null=True, blank=True)
 
 
 class HotelBooking(AbstractReserve):
