@@ -71,7 +71,8 @@ class Room(models.Model):
 
 
 class HotelComment(AbstractComment):
-    movie = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    comment_body = models.TextField()
 
     def __str__(self):
-        return self.Hotel
+        return f"{self.hotel}: {self.comment_body[:10]}..."
