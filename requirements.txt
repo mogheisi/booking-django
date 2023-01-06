@@ -6,3 +6,4 @@ redis==4.4.0
 hiredis==2.1.0
 django-filter==22.1
 python-decouple==3.6
+drf-spectacular==0.25.1

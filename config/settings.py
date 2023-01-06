@@ -44,12 +44,14 @@ INSTALLED_APPS = [
 
     'django_filters',
     'silk',
+    'drf_spectacular',
 
     'users',
     'reservations',
     'transportations',
     'residences',
     'comments',
+    'payments',
 ]
 
 MIDDLEWARE = [
@@ -144,8 +146,10 @@ REST_FRAMEWORK = {
     # 'PAGE_SIZE': 5
 
     # filtering
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 
+    # Swagger
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 
