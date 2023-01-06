@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 from datetime import timedelta
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'rj21$3x#^2dm*4k6x5pm$o$2@i$e8losyegsm=-l25iqjt3%7*'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -164,6 +165,8 @@ CACHES = {
         'TIMEOUT': None
     }
 }
+
+OTP_CODE_VALIDATION_TIME = config('OTP_CODE_VALIDATION_TIME', cast=int, default=120)
 
 # silky config
 
