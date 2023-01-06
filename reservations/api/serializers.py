@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from datetime import datetime
 
 from reservations.models import HotelBooking, FlightTicketReservation
 from residences.models import Room
@@ -36,7 +37,7 @@ class HotelBookingSerializer(serializers.ModelSerializer):
         return super(HotelBookingSerializer, self).create(validated_data)
 
     def validate(self, data):
-        booked_times = HotelBooking.objects.filter(room=data['room'].id)
+        booked_times = HotelBooking.objects.filter(end_date__gte=datetime.now()).filter(room=data['room'].id)
         for time in booked_times:
             if time.start_date <= data['start_date'] <= time.end_date or\
                     time.start_date <= data['end_date'] <= time.end_date:
