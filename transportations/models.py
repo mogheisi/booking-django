@@ -1,5 +1,5 @@
 from django.db import models
-from residences.models import City, Amenity
+from residences.models import City, Facility
 from comments.models import AbstractComment
 
 
@@ -30,7 +30,7 @@ class AbstractTransportationTicket(models.Model):
     origin = models.ForeignKey(City, on_delete=models.CASCADE, related_name='origin_city')
     destination = models.ForeignKey(City, on_delete=models.CASCADE, related_name='destination_city')
     capacity = models.IntegerField()
-    amenities = models.ForeignKey(Amenity, on_delete=models.CASCADE, blank=True, null=True)
+    facilities = models.ForeignKey(Facility, on_delete=models.CASCADE, blank=True, null=True)
     price = models.IntegerField()
 
     class Meta:

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from transportations.models import FlightTicket, FlightTypePrice, Airport, Airline
-from residences.models import Amenity, City, Country
+from residences.models import Facility, City, Country
 
 
 class CountrySerializer(serializers.ModelSerializer):
@@ -38,23 +38,23 @@ class FlightPriceSerializer(serializers.ModelSerializer):
         fields = ['flight_type', 'price']
 
 
-class AmenitiesSerializer(serializers.ModelSerializer):
+class FacilitySerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Amenity
+        model = Facility
         fields = '__all__'
 
 
 class TicketSerializer(serializers.ModelSerializer):
     airline = AirlineSerializer()
-    amenities = AmenitiesSerializer()
+    facilities = FacilitySerializer()
     origin_airport = AirportSerializer()
     destination_airport = AirportSerializer()
     origin = CitySerializer()
     destination = CitySerializer()
 
     def create(self, validated_data):
-        amenities = Amenity.objects.create(validated_data.pop('amenities'))
+        amenities = Facility.objects.create(validated_data.pop('amenities'))
         airline = Airline.objects.create(validated_data.pop('airline'))
         origin_airport = Airport.objects.create(validated_data.pop('origin_airport'))
         destination_airport = Airport.objects.create(validated_data.pop('destination_airport'))
@@ -67,5 +67,5 @@ class TicketSerializer(serializers.ModelSerializer):
         model = FlightTicket
         fields = ('origin', 'origin_airport', 'destination', 'destination_airport',
                   'departure_time', 'arrival_time', 'airline', 'price', 'capacity',
-                  'flight_number', 'amenities',
+                  'flight_number', 'facilities',
                   )

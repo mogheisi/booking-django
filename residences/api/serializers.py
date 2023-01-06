@@ -1,10 +1,13 @@
 from rest_framework import serializers
-from residences.models import Hotel, Room, Address, Amenity, HotelComment, Policy, City, Country
+from datetime import datetime
+
+from reservations.models import HotelBooking
+from residences.models import Hotel, Room, Address, Facility, HotelComment, Policy, City, Country
 
 
-class AmenitySerializer(serializers.ModelSerializer):
+class FacilitySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Amenity
+        model = Facility
         fields = "__all__"
 
 
@@ -31,7 +34,7 @@ class AddressSerializer(serializers.ModelSerializer):
 
 
 class RoomSerializer(serializers.ModelSerializer):
-    room_facilities = AmenitySerializer()
+    room_facilities = FacilitySerializer()
 
     class Meta:
         model = Room
@@ -55,7 +58,7 @@ class HotelSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
     comments = HotelComment()
     hotel_policies = PolicySerializer()
-    facilities = AmenitySerializer()
+    facilities = FacilitySerializer()
 
     class Meta:
         model = Hotel

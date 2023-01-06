@@ -28,18 +28,18 @@ class Policy(models.Model):
     policy_description = models.TextField()
 
 
-class Amenity(models.Model):
-    amenity_title = models.CharField(max_length=32)
-    amenity_description = models.TextField()
+class Facility(models.Model):
+    facility_title = models.CharField(max_length=32)
+    facility_description = models.TextField()
     is_valid = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.amenity_title
+        return self.facility_title
 
 
 class AbstractResidence(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='city')
-    facilities = models.ForeignKey(Amenity, on_delete=models.CASCADE, blank=True, null=True)
+    facilities = models.ForeignKey(Facility, on_delete=models.CASCADE, blank=True, null=True)
     address = models.ForeignKey(Address, on_delete=models.DO_NOTHING)
 
 
@@ -57,14 +57,10 @@ class Room(models.Model):
     room_number = models.IntegerField(unique=True)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     price = models.IntegerField()
-    room_facilities = models.ForeignKey(Amenity, on_delete=models.CASCADE, blank=True, null=True)
+    beds = models.IntegerField()
+    room_facilities = models.ForeignKey(Facility, on_delete=models.CASCADE, blank=True, null=True)
     capacity = models.PositiveSmallIntegerField()
     is_valid = models.BooleanField(default=True)
-    room_status = (
-        ('0', 'empty'),
-        ('1', 'full'),
-    )
-    status = models.CharField(choices=room_status, max_length=1)
 
     def __str__(self):
         return f"room {self.room_number}, {self.hotel.hotel_name}"
