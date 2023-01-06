@@ -29,7 +29,8 @@ class HotelBookingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HotelBooking
-        fields = ['start_date', 'end_date', 'hotel', 'room']
+        fields = ['start_date', 'end_date', 'hotel', 'room', 'passenger']
+        read_only_fields = ('passenger', 'is_staff')
 
     def create(self, validated_data):
         user = self.context['request'].user
@@ -51,7 +52,7 @@ class HotelBookingSerializer(serializers.ModelSerializer):
 class FlightTicketReserveSerializer(serializers.ModelSerializer):
     class Meta:
         model = FlightTicketReservation
-        fields = ['flight', 'passport_number']
+        fields = ['flight', 'id_number']
 
     def create(self, validated_data):
         user = self.context['request'].user

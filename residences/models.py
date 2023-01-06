@@ -57,7 +57,6 @@ class Room(models.Model):
     room_number = models.IntegerField(unique=True)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     price = models.IntegerField()
-    beds = models.IntegerField()
     room_facilities = models.ForeignKey(Facility, on_delete=models.CASCADE, blank=True, null=True)
     capacity = models.PositiveSmallIntegerField()
     is_valid = models.BooleanField(default=True)

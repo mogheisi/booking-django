@@ -11,23 +11,7 @@ class AbstractReserve(models.Model):
     passenger = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     created_time = models.DateTimeField(auto_now_add=True)
     modified_time = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        abstract = True
-
-
-class AbstractPayment(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-    total_price = models.IntegerField()
-    total_discount = models.IntegerField()
-    payment_time = models.DateTimeField()
-    status_choices = (
-        ('S', 'Successful'),
-        ('U', 'Unsuccessful'),
-        ('P', 'Pending'),
-        ('C', 'Canceled'),
-    )
-    payment_status = models.CharField(choices=status_choices, max_length=1)
+    reservation_number = models.AutoField(primary_key=True)
 
     class Meta:
         abstract = True
@@ -35,7 +19,7 @@ class AbstractPayment(models.Model):
 
 class FlightTicketReservation(AbstractReserve):
     flight = models.ForeignKey(FlightTicket, on_delete=models.PROTECT)
-    passport_number = models.IntegerField(null=True, blank=True)
+    id_number = models.IntegerField(unique=True)
 
 
 class HotelBooking(AbstractReserve):
