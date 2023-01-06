@@ -9,17 +9,17 @@ from utils.otp.otp import send_otp_to_user
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'first_name', 'last_name')
+        fields = ('id', 'username', 'password', 'phone_number')
         extra_kwargs = {
             'password': {'write_only': True},
         }
 
     def create(self, validated_data):
         user = User.objects.create_user(
-            validated_data['username'],
+            username=validated_data['username'],
             password=validated_data['password'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'])
+            phone_number=validated_data['phone_number']
+        )
         return user
 
 
